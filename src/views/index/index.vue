@@ -11,7 +11,8 @@ export default {
   data() {
     return {
       zoom:12,
-      center:[116.404765,39.918052]
+      center:[116.404765,39.918052],
+      data:[{a:1}]
     };
   }
 };
