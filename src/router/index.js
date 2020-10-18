@@ -1,14 +1,20 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Index from "../views/index/index";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "index",
-    component: Index
+    name: "Index",
+    component: () => import("../views/index/index"),
+    children: [
+      {
+        path: "/user",
+        name: "User",
+        component: () => import("../views/user/index")
+      }
+    ]
   }
 ];
 
