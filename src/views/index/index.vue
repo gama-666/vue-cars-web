@@ -4,28 +4,28 @@
     <Map />
     <!-- 车辆信息渲染 -->
     <Cars />
+        <NavBar/>
     <!-- 会员中心 -->
-    <div id="children-view" :class="show ? 'open' : ''">
+    <div id="children-view" :class="{ open: show }">
       <router-view />
     </div>
+
   </div>
 </template>
 <script>
 import Map from "../amap/index";
 import Cars from "../cars/index";
+import NavBar from "@/commponents/navbar/index";
 export default {
   name: "Index",
-  components: { Map, Cars },
+  components: { Map, Cars,NavBar },
   data() {
-    return {
-      show: false
-    };
+    return{}
   },
-  watch: {
-    $route: {
-      handler(newValue) {
-        newValue.name !== "Index" ? (this.show = true) : (this.show = false);
-      }
+  computed: {
+    show() {
+      const router = this.$route;
+      return router.name === "Index" ? false : true;
     }
   }
 };
