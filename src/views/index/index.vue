@@ -2,25 +2,25 @@
   <div id="index-wrap">
     <!-- 地图 -->
     <Map />
+    <!-- 导航 -->
+    <NavBar />
     <!-- 车辆信息渲染 -->
     <Cars />
-        <NavBar/>
     <!-- 会员中心 -->
     <div id="children-view" :class="{ open: show }">
       <router-view />
     </div>
-
   </div>
 </template>
 <script>
-import Map from "../amap/index";
-import Cars from "../cars/index";
-import NavBar from "@/commponents/navbar/index";
+import Map from "../amap";
+import Cars from "../cars";
+import NavBar from "@/commponents/navbar";
 export default {
   name: "Index",
-  components: { Map, Cars,NavBar },
+  components: { Map, Cars, NavBar },
   data() {
-    return{}
+    return {};
   },
   computed: {
     show() {
@@ -39,11 +39,7 @@ export default {
   z-index: 101;
   width: 410px;
   background-color: #34393f;
-  -webkit-transition: all 0.3s ease 0s;
-  -moz-transition: all 0.3s ease 0s;
-  -ms-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
+  @include webkit(transition, all 0.3s ease 0s);
   &.open {
     right: 0px;
   }

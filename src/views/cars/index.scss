@@ -1,0 +1,98 @@
+#cars-wrap {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 94px;
+    z-index: 11;
+}
+.cars-item {
+    margin: 0 auto;
+    width: 506px;
+    height: 258px;
+    padding: 30px 30px 0px 30px;
+    background-color: #fff;
+    border-radius: 24px;
+    @include webkit(box-shadow, 0 0 18px 0 rgba(0, 0, 0, .2));
+    @include webkit(box-sizing, border-box);
+    header {
+        @include clearfix;
+    }
+}
+.cars-logo {
+    float: left;
+    img {
+        display: inline-block;
+        height: 34px;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    span {
+        font-size: 16px;
+    }
+}
+.cars-attr {
+    float: right;
+    opacity: 0.5;
+    height: 34px;
+    line-height: 34px;
+    font-size: 16px;
+}
+.cars-content{
+    margin: 11px 0px 7px;
+    @include clearfix;
+    position: relative;
+    img{
+        float: right;
+        height: 120px;
+    }
+    .info{
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+    }
+    .cars-number{
+        font-size: 18px;
+    }
+    .cars-electric{
+        padding-top: 10px;
+        display: inline-block;
+        li{
+            display: inline-block   ;
+            width: 7px;
+            height: 24px;
+            border-radius: 100px;
+            background-color: #e1e1e1;
+            margin-right: 3px;
+        }
+        .active{
+            @include webkitA(background,linear-gradient(#17a8fa,#108dd9));
+        }
+    }
+    .distance{
+        display: inline-block;
+        padding-left: 5px;
+        sub{
+            font-size: 12px;
+            padding: 0 4px;
+            opacity: 0.5;
+        }
+        span{
+            font-size: 22px;
+            font-weight: 200;
+        }
+    }
+}
+
+.parking-link{
+    display: block;
+    line-height: 53px;
+    width: 100%;
+    font-size: 14px;
+    color: $color-main;
+    border-top: 1px solid #e1e1e1;
+    opacity: .8;
+}
