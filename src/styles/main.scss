@@ -1,16 +1,23 @@
 @import "./reset.scss";
 @import "./sassConfig.scss";
+@import "./icon.scss";
 
-i[class^=icon]{
-    display: inline-block;
-    width: 44px;
-    height: 44px;
-    background-color: $color-main;
-    border-radius: 100px;
-    background-repeat: no-repeat;
-}
 
-.icon-help{background-image: url(~@/assets/images/icon-help.png);}
-.icon-seach{background-image: url(~@/assets/images/icon-seach.png);}
-.icon-location{background-image: url(~@/assets/images/icon-location.png);}
-.icon-user{background-image: url(~@/assets/images/icon-user.png);}
+
+.color-main{color:#34393f}
+.text-left{text-align: left}
+.text-center{text-align: center}
+.text-right{text-align: right}
+
+
+.pull-left{float: left;}
+.pull-right{float: right;}
+
+// font-size
+
+.fs-14{font-size: 14px;}
+.fs-24{font-size: 24px;}
+
+//相对定位、绝对定位
+.p-r{position: relative;}
+.p-a{position: relative;}

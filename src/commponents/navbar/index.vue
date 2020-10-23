@@ -3,7 +3,7 @@
     <ul>
       <li><i class="icon icon-help"></i></li>
       <li><i class="icon icon-seach"></i></li>
-      <li><div class="choice">选择车辆</div></li>
+      <li> <a href="javascript:void(0);" class="select-cat-btn">选择车辆</a></li>
       <li><i class="icon icon-location"></i></li>
       <li><i class="icon icon-user"></i></li>
     </ul>
@@ -35,7 +35,7 @@ export default {
     cursor: pointer;
   }
 }
-.choice {
+.select-cat-btn {
   display: block;
   width: 240px;
   height: 84px;

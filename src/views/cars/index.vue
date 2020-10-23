@@ -1,53 +1,38 @@
 <template>
   <div id="cars-wrap">
-    <section class="cars-item">
-      <header>
-        <h4 class="cars-logo">
-          <img src="../../assets/cars-logo.jpg" alt="Mustang 2019款" />
-          <span>Mustang 2019款</span>
-        </h4>
-        <p class="cars-attr">新能源汽车 5座</p>
-      </header>
-      <div class="cars-content">
-        <div class="info">
-          <div>
-            <h4 class="cars-number">粤 B745N8</h4>
-            <div>
-              <ul class="cars-electric">
-                <li class="active"></li>
-                <li class="active"></li>
-                <li class="active"></li>
-                <li class="active"></li>
-                <li class="active"></li>
-                <li class="active"></li>
-                <li class="active"></li>
-                <li></li>
-                <li></li>
-                <li></li>
-              </ul>
-              <p class="distance">
-                <sub>约</sub>
-                <span>600</span>
-                <sub>KM</sub>
-              </p>
-            </div>
-          </div>
-        </div>
-        <img src="../../assets/car-1.jpg" alt="" />
-      </div>
-
-      <footer>
-        <a href="javascipt: void(0);" class="parking-link">某某某停车场</a>
-      </footer>
-    </section>
+    <div class="cars-swiper-wrap">
+      <swiper class="swiper" ref="mySwiper" :options="swiperOption">
+        <swiper-slide><CarsItem height="820px" /></swiper-slide>
+        <swiper-slide><CarsItem /></swiper-slide>
+        <swiper-slide><CarsItem /></swiper-slide>
+        <swiper-slide><CarsItem /></swiper-slide>
+        <swiper-slide><CarsItem /></swiper-slide>
+        <swiper-slide><CarsItem /></swiper-slide>
+      </swiper>
+      <div class="swiper-button-prev" slot="button-prev" @click="prev"></div>
+      <div class="swiper-button-next" slot="button-next" @click="next"></div>
+    </div>
     <span @click="user">汽车列表</span>
   </div>
 </template>
 <script>
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/dist/css/swiper.css";
+import CarsItem from "@c/carsItem";
 export default {
   name: "Cars",
+  components: { Swiper, SwiperSlide, CarsItem },
   data() {
-    return {};
+    return {
+      swiperOption: {
+        slidesPerView: 3,
+        spaceBetween: 50,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      }
+    };
   },
   methods: {
     user() {
@@ -58,6 +43,12 @@ export default {
           name: "User"
         });
       }
+    },
+    prev() {
+      this.$refs.mySwiper.$swiper.slidePrev();
+    },
+    next() {
+      this.$refs.mySwiper.$swiper.slideNext();
     }
   }
 };
