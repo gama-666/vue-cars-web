@@ -1,0 +1,47 @@
+#user-wrap{
+    padding:0 30px;
+}
+.user-info{
+   display: flex;
+   padding: 84px 0px 80px 10px;     
+   img{
+       width: 80px;
+       height: 80px;
+       border-radius:100%;
+       border: 6px solid #2f343a;
+   }
+   .mate{
+       flex: 1;
+       padding-left: 17px;
+       .name{
+        color: #909090;
+        line-height: 43px;
+        font-size: 18px;
+       }
+       span{
+           display: inline-block;
+           height: 27px;
+           line-height: 27px;
+           padding: 0 17px;
+           border-radius: 100px;
+           color: #fff;
+           background-color: $color-blur;
+       }
+   }
+}
+.logout{
+    display: block;
+    width: 165px;
+    height: 58px;
+    line-height: 58px;
+    text-align:center;
+    color: #fff;
+    font-size: 18px;
+    background-color: #2d3339;
+    border-radius: 100px;
+    border: none;
+    outline: none;
+    margin:110px auto;
+    cursor: pointer;
+    @include webkit(box-shadow, -5px 0 38px 0 rgba(0, 0, 0, .4));
+}

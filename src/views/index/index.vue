@@ -5,7 +5,7 @@
     <!-- 导航 -->
     <NavBar />
     <!-- 车辆信息渲染 -->
-    <Cars />
+    <!-- <Cars /> -->
     <!-- 会员中心 -->
     <div id="children-view" :class="{ open: show }">
       <router-view />
@@ -23,10 +23,27 @@ export default {
     return {};
   },
   computed: {
+    //监听是否打开会员菜单
     show() {
       const router = this.$route;
       return router.name === "Index" ? false : true;
     }
+  },
+  mounted() {
+    //挂载完成时，鼠标抬起时事件
+    document.addEventListener("mouseup", e => {
+      const userCon = document.querySelector("#children-view");
+      if (userCon) {
+        //contains方法：判断目标是否包含
+        if (!userCon.contains(e.target)) {
+          this.$router
+            .push({
+              name: "Index"
+            })
+            .catch(error => error);
+        }
+      }
+    });
   }
 };
 </script>
@@ -40,6 +57,7 @@ export default {
   width: 410px;
   background-color: #34393f;
   @include webkit(transition, all 0.3s ease 0s);
+  @include webkit(box-shadow, -5px 0 38px 0 rgba(0, 0, 0, .4));
   &.open {
     right: 0px;
   }

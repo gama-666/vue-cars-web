@@ -1,11 +1,11 @@
 <template>
   <div id="navbar-wrap">
     <ul>
-      <li><i class="icon icon-help"></i></li>
-      <li><i class="icon icon-seach"></i></li>
-      <li> <a href="javascript:void(0);" class="select-cat-btn">选择车辆</a></li>
-      <li><i class="icon icon-location"></i></li>
-      <li><i class="icon icon-user"></i></li>
+      <li><i class="icon icon-w-44 icon-help"></i></li>
+      <li><i class="icon icon-w-44 icon-seach"></i></li>
+      <li><a href="javascript:void(0);" class="select-cat-btn">选择车辆</a></li>
+      <li><i class="icon icon-w-44 icon-location"></i></li>
+      <li><i class="icon icon-w-44 icon-user" @click="toUser"></i></li>
     </ul>
   </div>
 </template>
@@ -15,7 +15,14 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    //点击时打开会员菜单
+    toUser() {
+      this.$router.push({
+        name: "User"
+      });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -32,6 +39,7 @@ export default {
   .icon {
     margin: 0 17px;
     vertical-align: middle;
+    
     cursor: pointer;
   }
 }

@@ -21,3 +21,22 @@
 //相对定位、绝对定位
 .p-r{position: relative;}
 .p-a{position: relative;}
+
+
+//user router-link
+.group-links{
+    font-size: 14px;
+    a{
+        display: block;
+        padding: 0 32px;
+        margin: 0 -30px;
+        color: rgba(255,255,255,.4);
+        border-bottom: 1px solid rgba(255,255,255,.03);
+        height: 64px;
+        line-height: 64px;
+    }
+    .icon{
+        vertical-align: middle;
+        margin:  0 16px 0px 0px;
+    }
+}
