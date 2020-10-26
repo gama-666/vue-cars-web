@@ -7,13 +7,13 @@
       <router-link to="/password" tag="a" class="arrow">
         修改登录密码
       </router-link>
-      <router-link to="aa" tag="a" class="arrow">
+      <router-link to="/setpassword" tag="a" class="arrow">
         设置资金密码
       </router-link>
-      <router-link to="aa" tag="a" class="arrow">
+      <router-link to="/phone" tag="a" class="arrow">
         绑定手机号
       </router-link>
-      <router-link to="aa" tag="a" class="arrow">
+      <router-link to="/bankcard" tag="a" class="arrow">
         绑定银行卡
       </router-link>
     </ul>
