@@ -1,6 +1,7 @@
 @import "./reset.scss";
 @import "./sassConfig.scss";
 @import "./icon.scss";
+@import "./ui.scss";
 
 
 
@@ -14,8 +15,8 @@
 .pull-right{float: right;}
 
 // font-size
-
 .fs-14{font-size: 14px;}
+.fs-16{font-size: 16px;}
 .fs-24{font-size: 24px;}
 
 //相对定位、绝对定位

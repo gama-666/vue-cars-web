@@ -8,23 +8,23 @@
       </div>
     </div>
     <ul class="group-links">
-      <router-link to="aa" tag="a">
+      <router-link to="aa" tag="a" class="arrow">
         <i class="icon icon-account icon-w-35"></i>
         我的账户
       </router-link>
-      <router-link to="aa">
+      <router-link to="aa" tag="a" class="arrow">
         <i class="icon icon-order icon-w-35"></i>
         租车订单
       </router-link>
-      <router-link to="aa">
+      <router-link to="aa" tag="a" class="arrow">
         <i class="icon icon-authentication icon-w-35"></i>
         安全认证
       </router-link>
-      <router-link to="aa">
+      <router-link to="/safe" tag="a" class="arrow">
         <i class="icon icon-setup icon-w-35"></i>
         安全设置
       </router-link>
-      <router-link to="aa">
+      <router-link to="aa" tag="a" class="arrow">
         <i class="icon icon-Help-center icon-w-35"></i>
         帮助中心
       </router-link>

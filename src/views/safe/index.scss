@@ -1,0 +1,19 @@
+#user-wrap{
+    padding:0 30px;
+}
+.arrow{
+    position: relative;
+    &:after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 32px;
+        width: 10px;
+        height: 10px;
+        margin-top: -5px;
+        border-right: 1px solid rgba(255,255,255,.4);
+        border-top: 1px solid rgba(255,255,255,.4);
+        @include webkit(transform, rotate(45deg));
+        @include webkit(box-sizing, border-box)
+    }
+}
