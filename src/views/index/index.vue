@@ -10,15 +10,17 @@
     <div id="children-view" :class="{ open: show }">
       <router-view />
     </div>
+    <Login />
   </div>
 </template>
 <script>
 import Map from "../amap";
 import Cars from "../cars";
+import Login from "./login"
 import NavBar from "@/commponents/navbar";
 export default {
   name: "Index",
-  components: { Map, Cars, NavBar },
+  components: { Map, Cars, NavBar, Login },
   data() {
     return {};
   },
@@ -57,7 +59,7 @@ export default {
   width: 410px;
   background-color: #34393f;
   @include webkit(transition, all 0.3s ease 0s);
-  @include webkit(box-shadow, -5px 0 38px 0 rgba(0, 0, 0, .4));
+  @include webkit(box-shadow, -5px 0 38px 0 rgba(0, 0, 0, 0.4));
   &.open {
     right: 0px;
   }

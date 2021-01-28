@@ -12,17 +12,10 @@ export default {
       map: null,
       center: [116.404765, 39.918052],
       zoom: 12,
-      events: {
-        init(o) {
-          let marker = new AMap.Marker({
-            position: [116.404765, 39.918052]
-          });
-          marker.setMap(o);
-        }
-      }
+      events: {}
     };
   },
-  mouted() {
+  mounted() {
     lazyAMapApiLoaderInstance.load().then(() => {
       //your code...
       this.map = new AMap.Map("amapContainer", {
