@@ -1,7 +1,7 @@
 <template>
   <div id="index-wrap">
     <!-- 地图 -->
-    <Map />
+    <Map @callbackComponent="callbackComponent" />
     <!-- 导航 -->
     <NavBar />
     <!-- 车辆信息渲染 -->
@@ -10,6 +10,7 @@
     <div id="children-view" :class="{ open: show }">
       <router-view />
     </div>
+    <!-- 登陆 -->
     <Login />
   </div>
 </template>
@@ -18,11 +19,26 @@ import Map from "../amap";
 import Cars from "../cars";
 import Login from "./login"
 import NavBar from "@/commponents/navbar";
+import { Parking } from "@/api/parking";
 export default {
   name: "Index",
   components: { Map, Cars, NavBar, Login },
   data() {
     return {};
+  },
+  methods: {
+    callbackComponent(parms) {
+      parms.function && this[parms.function](parms.data)
+    },
+    loadMap() {
+    
+      this.getParking()
+    },
+    getParking() {
+      Parking().then(response => {
+        console.log(response)
+      })
+    }
   },
   computed: {
     //监听是否打开会员菜单
@@ -38,15 +54,14 @@ export default {
       if (userCon) {
         //contains方法：判断目标是否包含
         if (!userCon.contains(e.target)) {
-          this.$router
-            .push({
-              name: "Index"
-            })
-            .catch(error => error);
+          this.$router.push({
+            name: "Index"
+          }).catch(error => error);
         }
       }
     });
-  }
+
+  },
 };
 </script>
 <style lang="scss" scoped>
