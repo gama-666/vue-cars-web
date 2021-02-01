@@ -1,77 +1,87 @@
 <template>
   <div id="amap-wrap">
     <el-amap vid="amapContainer" :amap-manager="amapManager" :center="center" :zoom="zoom" :events="events" class="amap-demo">
-      <!-- 覆盖物、圆 -->
-      <el-amap-circle v-for="item in circle" :key="item.id" :center="item.center" :radius="item.radius" :fillColor="item.Color" :strokeColor="item.Color" :strokeOpacity="item.strokeOpacity" :strokeWeight="item.strokeWeight">
-      </el-amap-circle>
+      <!-- 覆盖物、(圆)根据浏览器获取自身定位 -->
+      <el-amap-circle v-for="item in circle" :key="item.id" :center="item.center" :radius="item.radius" :fillColor="item.Color" :strokeColor="item.Color" :strokeOpacity="item.strokeOpacity" :strokeWeight="item.strokeWeight"></el-amap-circle>
+      <!-- 覆盖物、(圆)停车场 -->
+      <el-amap-marker v-for="(item, index) in parking" :key="item.id" :content="item.content" :offset="item.offset" :position="item.position" :vid="index"></el-amap-marker>
+      <!-- 覆盖物、(车辆数量)停车场 -->
+      <el-amap-marker v-for="(item, index) in parking" :key="item.index" :content="item.text" :offset="item.offsetText" :position="item.position" :vid="index"></el-amap-marker>
+    
     </el-amap>
   </div>
 </template>
 <script>
 import { AMapManager, lazyAMapApiLoaderInstance } from "vue-amap";
-
+import { SelfLocation } from "./location";
 let amapManager = new AMapManager();
 export default {
   name: "Amap",
   data() {
     const _this = this;
     return {
+      //高德地图默认数据
       map: null,
       amapManager,
       center: [121.59996, 31.197646],
       zoom: 18,
+      //高德地图默认事件
+      events: {
+        init(o) {   //兼容原生搞的SDK，初始化
+          lazyAMapApiLoaderInstance.load().then(() => {
+            _this.intiMap()
+          });
+        }
+      },
+      //覆盖物、(圆)、默认定位和样式
       circle: [
         {
-          center: [113.8639, 22.56331],
+          center: [121.59996, 31.197646],
           radius: 4,
           Color: "#393e43",
           strokeOpacity: "0.2",
           strokeWeight: "30",
         }
       ],
-      events: {
-        //兼容原生搞的SDK，初始化
-        init(o) {
-          lazyAMapApiLoaderInstance.load().then(() => {
-            _this.intiMap()
-          });
-        }
-      },
+      //覆盖物、(数字圆)停车场 
+      parking: [],
+      
     };
   },
   methods: {
     //初始化地图
     intiMap() {
       this.map = amapManager.getMap()
-      //地图初始化完成
-      this.$emit("callbackComponent", {
+      this.$emit("callbackComponent", {    //地图初始化完成，事件回调
         function: "loadMap"
       })
-      // 浏览器精确定位
-      var geolocation = new AMap.Geolocation({
-        enableHighAccuracy: true,//是否使用高精度定位，默认:true
-        timeout: 10000,          //超过10秒后停止定位，默认：5s
-        buttonPosition: 'RB',    //定位按钮的停靠位置
-        buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-        zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
-        markerOptions: {
-          content: " "
-        }
-      });
-      this.map.addControl(geolocation);
-      geolocation.getCurrentPosition((status, result) => {
-        if (status == 'complete') {
-          const lng = result.position.lng;
-          const lat = result.position.lat;
-          this.circle[0].center = [lng, lat]
-        } else {
-          console.log(result)
-        }
-      });
-    }
+      this.selfLocation()
+    },
+    //自身定位，（浏览器精确定位）
+    selfLocation() {
+      SelfLocation({
+        map: this.map,
+        complete: (val) => this.onComplete(val)
+      })
+    },
+    //根据返回的经纬度定位
+    onComplete(result) {
+      let lng = result.position.lng;
+      let lat = result.position.lat;
+      this.circle[0].center = [lng, lat]
+    },
+    //停车场数据,父组件传入
+    parkingData(data) {
+      this.parking = data;
+    },
   },
-  mounted() {
-
+  watch: {
+    //监听，当点击时会回到自身定位位置
+    "$store.state.location.selfLocation": {
+      handler() {
+        this.selfLocation()
+      }
+    }
   }
 };
 </script>

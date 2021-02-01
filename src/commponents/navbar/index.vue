@@ -4,7 +4,7 @@
       <li><i class="icon icon-w-44 icon-help"></i></li>
       <li><i class="icon icon-w-44 icon-seach"></i></li>
       <li><a href="javascript:void(0);" class="select-cat-btn">选择车辆</a></li>
-      <li><i class="icon icon-w-44 icon-location"></i></li>
+      <li><i class="icon icon-w-44 icon-location" @click="selfLocation"></i></li>
       <li><i class="icon icon-w-44 icon-user" @click="toUser"></i></li>
     </ul>
   </div>
@@ -20,7 +20,11 @@ export default {
     toUser() {
       this.$router.push({
         name: "User"
-      });
+      })
+    },
+    //点击时，回到自身定位位置，通过VUX来监听
+    selfLocation() {
+      this.$store.commit("location/SET_LOCATION")
     }
   }
 };
@@ -39,7 +43,7 @@ export default {
   .icon {
     margin: 0 17px;
     vertical-align: middle;
-    
+
     cursor: pointer;
   }
 }

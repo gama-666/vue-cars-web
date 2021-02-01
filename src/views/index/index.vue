@@ -1,7 +1,7 @@
 <template>
   <div id="index-wrap">
     <!-- 地图 -->
-    <Map @callbackComponent="callbackComponent" />
+    <Map ref="map" @callbackComponent="callbackComponent" />
     <!-- 导航 -->
     <NavBar />
     <!-- 车辆信息渲染 -->
@@ -27,18 +27,30 @@ export default {
     return {};
   },
   methods: {
+    //地图回调
     callbackComponent(parms) {
       parms.function && this[parms.function](parms.data)
     },
+    //地图初始化完成回调
     loadMap() {
-    
       this.getParking()
     },
+    //获取停车场数据
     getParking() {
       Parking().then(response => {
-        console.log(response)
+        const data = response.data.data;
+        data.forEach((item, index) => {
+          item.position = item.lnglat.split(',');
+          item.content = "<img src='" + require('@/assets/parking.png') + "' />";
+          item.offset = [-26, -60];
+          item.offsetText = [-10, -45];
+          item.text = `<div style="color:#ffffff">${item.carsNumber}</div>`;
+          item.index = index;
+        })
+        //调用地图方法,父组件调用子组件方法
+        this.$refs.map.parkingData(data)
       })
-    }
+    },
   },
   computed: {
     //监听是否打开会员菜单
@@ -60,7 +72,6 @@ export default {
         }
       }
     });
-
   },
 };
 </script>
