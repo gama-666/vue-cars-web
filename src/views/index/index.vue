@@ -39,18 +39,26 @@ export default {
     getParking() {
       Parking().then(response => {
         const data = response.data.data;
+
         data.forEach((item, index) => {
           item.position = item.lnglat.split(',');
           item.content = "<img src='" + require('@/assets/parking.png') + "' />";
           item.offset = [-26, -60];
           item.offsetText = [-10, -45];
-          item.text = `<div style="color:#ffffff">${item.carsNumber}</div>`;
+          item.text = `<div style="width:53px; height:63px;color:#ffffff">${item.carsNumber}</div>`;
           item.index = index;
+          item.events = {
+            click: () => { this.walkClick(item) }
+          }
         })
         //调用地图方法,父组件调用子组件方法
         this.$refs.map.parkingData(data)
       })
     },
+    //回调，步行路径规划
+    walkClick(item) {
+      this.$refs.map.handlerWalking(item)
+    }
   },
   computed: {
     //监听是否打开会员菜单

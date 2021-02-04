@@ -1,5 +1,7 @@
 
-let geolocation = null
+let geolocation = null;
+
+
 
 //当前自己的定位，根据浏览器获取，经纬度准确度会有偏差
 export function SelfLocation(parms) {
@@ -28,3 +30,5 @@ export function SelfLocation(parms) {
         AMap.event.addListener(geolocation, 'complete', parms.error);//返回定位信息
     }
 }
+
+
