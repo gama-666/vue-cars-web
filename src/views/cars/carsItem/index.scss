@@ -54,15 +54,12 @@
         height: 100%;
         align-items: center;
     }
-
     .cars-number {
         font-size: 18px;
     }
-
     .cars-electric {
         padding-top: 10px;
         display: inline-block;
-
         li {
             display: inline-block;
             width: 7px;
@@ -71,9 +68,10 @@
             background-color: #e1e1e1;
             margin-right: 3px;
         }
-
-        .active {
-            @include webkitA(background, linear-gradient(#17a8fa, #108dd9));
+        @for $i from 1 through 10 {
+            &.active-li-#{$i} {
+                li:nth-child(-n+#{$i}){@include webkitA(background, linear-gradient(#17a8fa, #108dd9));}
+            }
         }
     }
 }

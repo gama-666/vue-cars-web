@@ -1,11 +1,11 @@
 <template>
   <div id="index-wrap">
+    <!-- 车辆信息渲染 -->
+    <Cars ref="cars" />
     <!-- 地图 -->
     <Map ref="map" @callbackComponent="callbackComponent" />
     <!-- 导航 -->
     <NavBar />
-    <!-- 车辆信息渲染 -->
-    <!-- <Cars /> -->
     <!-- 会员中心 -->
     <div id="children-view" :class="{ open: show }">
       <router-view />
@@ -20,6 +20,7 @@ import Cars from "../cars";
 import Login from "./login"
 import NavBar from "@/commponents/navbar";
 import { Parking } from "@/api/parking";
+
 export default {
   name: "Index",
   components: { Map, Cars, NavBar, Login },
@@ -39,7 +40,6 @@ export default {
     getParking() {
       Parking().then(response => {
         const data = response.data.data;
-
         data.forEach((item, index) => {
           item.position = item.lnglat.split(',');
           item.content = "<img src='" + require('@/assets/parking.png') + "' />";
@@ -48,7 +48,10 @@ export default {
           item.text = `<div style="width:53px; height:63px;color:#ffffff">${item.carsNumber}</div>`;
           item.index = index;
           item.events = {
-            click: () => { this.walkClick(item) }
+            click: () => {
+              this.walkClick(item); //路线规划
+              this.$refs.cars && this.$refs.cars.getCarsList(item); //父组件调用子组件方法,车辆列表信息接口请求
+            }
           }
         })
         //调用地图方法,父组件调用子组件方法
@@ -57,7 +60,12 @@ export default {
     },
     //回调，步行路径规划
     walkClick(item) {
-      this.$refs.map.handlerWalking(item)
+      const lnglat = item.lnglat.split(",");
+      this.$refs.map.handlerWalking(lnglat)
+      this.$refs.map.saveData({
+        key: "parking_data",
+        value: item
+      })
     }
   },
   computed: {

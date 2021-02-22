@@ -8,7 +8,7 @@
       <!-- 覆盖物、(车辆数量)停车场 -->
       <el-amap-marker v-for="(item, index) in parking" :extData="item" :events="item.events" :key="item.index" :content="item.text" :offset="item.offsetText" :position="item.position" :vid="index"></el-amap-marker>
       <!-- 覆盖物、(距离信息)停车场 -->
-      <el-amap-marker v-for="(item, index) in parkingInfo" :key="item.index + index" :content="item.text" :offset="item.offsetText" :position="item.position" :vid="index"></el-amap-marker>
+      <el-amap-marker v-for="(item, index) in parkingInfo" zIndex="1000" :key="item.index + index" :content="item.text" :offset="item.offsetText" :position="item.position" :vid="index"></el-amap-marker>
 
     </el-amap>
   </div>
@@ -17,6 +17,8 @@
 import { AMapManager, lazyAMapApiLoaderInstance } from "vue-amap";
 import { SelfLocation } from "./location";
 import { Walking } from "./walking";
+// 样式
+import styleCss from "./style";
 
 let amapManager = new AMapManager();
 export default {
@@ -72,11 +74,11 @@ export default {
     selfLocation() {
       SelfLocation({
         map: this.map,
-        complete: (val) => this.onComplete(val)
+        complete: (val) => this.selfLocationComplete(val)
       })
     },
-    //根据返回的经纬度定位
-    onComplete(result) {
+    // 自身定位（成功回调）根据返回的经纬度定位
+    selfLocationComplete(result) {
       this.sele_lng = result.position.lng;
       this.sele_lat = result.position.lat;
       this.circle[0].center = [this.sele_lng, this.sele_lat]
@@ -85,27 +87,30 @@ export default {
     parkingData(data) {
       this.parking = data;
     },
+    //存储数据，路径规划,停车场信息
+    saveData(params) {
+      if (params.key) { this[params.key] = params.value };
+    },
     //步行路径规划
-    handlerWalking(data) {
-      this.parking_data = data;
-      const lnglat = this.parking_data.lnglat.split(",");
+    handlerWalking(lnglat) {
       Walking({
         map: this.map,
         position_start: [this.sele_lng, this.sele_lat],
         position_end: lnglat,
-        complete: (val) => this.handlerWalkingComplete(val)
+        complete: (val) => this.handlerWalkingComplete(val, lnglat)
       })
     },
     //步行路径规划成功回调
-    handlerWalkingComplete(data) {
-      const lnglat = this.parking_data.lnglat.split(",");
+    handlerWalkingComplete(val, lnglat) {
       this.parkingInfo = [
         {
           position: lnglat,
-          text: `<div style="width:300px;height:50px;line-height:50px;padding:0 20px;font-size:16px;color:#ffffff;background-color:#34393f;border-radius:100px;">
-            <strong>${this.parking_data.carsNumber}</strong>辆车丨距离您 ${data.routes[0].distance}米
-          </div>`,
-          offsetText: [-22, -42]
+          text: `<div style="${styleCss.parkingInfoWrap}">
+                   <span style="${styleCss.parkingInfoNumber}">${this.parking_data.carsNumber}</span>辆车
+                    <span style="${styleCss.parkingInfoLine}">丨</span>
+                    距离您 ${val.routes[0].distance}米
+                 </div>`,
+          offsetText: [-22, -48]
         }]
     }
   },

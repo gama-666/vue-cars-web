@@ -2,12 +2,9 @@
   <div id="cars-wrap">
     <div class="cars-swiper-wrap">
       <swiper class="swiper" ref="mySwiper" :options="swiperOption">
-        <swiper-slide><CarsItem height="820px" /></swiper-slide>
-        <swiper-slide><CarsItem /></swiper-slide>
-        <swiper-slide><CarsItem /></swiper-slide>
-        <swiper-slide><CarsItem /></swiper-slide>
-        <swiper-slide><CarsItem /></swiper-slide>
-        <swiper-slide><CarsItem /></swiper-slide>
+        <swiper-slide v-for="item in carsList" :key="item.id">
+          <CarsItem height="820px" :data="item" />
+        </swiper-slide>
       </swiper>
       <div class="swiper-button-prev" slot="button-prev" @click="prev"></div>
       <div class="swiper-button-next" slot="button-next" @click="next"></div>
@@ -16,9 +13,14 @@
   </div>
 </template>
 <script>
+//组件
+import CarsItem from "./carsItem";
+//Swiper
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
-import CarsItem from "@c/carsItem";
+//API 车辆列表接口
+import { GetCarsList } from "@/api/cars";
+
 export default {
   name: "Cars",
   components: { Swiper, SwiperSlide, CarsItem },
@@ -31,7 +33,8 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         }
-      }
+      },
+      carsList: [],
     };
   },
   methods: {
@@ -40,6 +43,15 @@ export default {
     },
     next() {
       this.$refs.mySwiper.$swiper.slideNext();
+    },
+    //车辆列表请求接口
+    getCarsList(data) {
+      GetCarsList({ parkingId: data.id }).then(response => {
+        this.carsList = response.data.data;
+        console.log(this.carsList)
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 };
